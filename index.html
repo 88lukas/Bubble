@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Compass Example</title>
+    <title>Device Properties Example</title>
 
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <script type="text/javascript" charset="utf-8">
@@ -10,28 +10,35 @@
     //
     document.addEventListener("deviceready", onDeviceReady, false);
 
+    var watchID = null;
+
     // device APIs are available
     //
     function onDeviceReady() {
-        navigator.compass.getCurrentHeading(onSuccess, onError);
+        // Throw an error if no update is received every 30 seconds
+        var options = { timeout: 30000 };
+        watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
     }
 
-    // onSuccess: Get the current heading
+    // onSuccess Geolocation
     //
-    function onSuccess(heading) {
-        alert('Heading: ' + heading.magneticHeading);
+    function onSuccess(position) {
+        var element = document.getElementById('geolocation');
+        element.innerHTML = 'Latitude: '  + position.coords.latitude      + '<br />' +
+                            'Longitude: ' + position.coords.longitude     + '<br />' +
+                            '<hr />'      + element.innerHTML;
     }
 
-    // onError: Failed to get the heading
-    //
-    function onError(compassError) {
-        alert('Compass Error: ' + compassError.code);
-    }
+        // onError Callback receives a PositionError object
+        //
+        function onError(error) {
+            alert('code: '    + error.code    + '\n' +
+                  'message: ' + error.message + '\n');
+        }
 
     </script>
   </head>
   <body>
-    <h1>Example</h1>
-    <p>getCurrentHeading</p>
+    <p id="geolocation">Watching geolocation...</p>
   </body>
 </html>

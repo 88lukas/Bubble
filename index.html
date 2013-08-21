@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Compass Example</title>
+    <title>Notification Example</title>
 
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <script type="text/javascript" charset="utf-8">
@@ -13,25 +13,28 @@
     // device APIs are available
     //
     function onDeviceReady() {
-        navigator.compass.getCurrentHeading(onSuccess, onError);
+        // Empty
     }
 
-    // onSuccess: Get the current heading
-    //
-    function onSuccess(heading) {
-        alert('Heading: ' + heading.magneticHeading);
-    }
+    // alert dialog dismissed
+        function alertDismissed() {
+            // do something
+        }
 
-    // onError: Failed to get the heading
+    // Show a custom alertDismissed
     //
-    function onError(compassError) {
-        alert('Compass Error: ' + compassError.code);
+    function showAlert() {
+        navigator.notification.alert(
+            'You are the winner!',  // message
+            alertDismissed,         // callback
+            'Game Over',            // title
+            'Done'                  // buttonName
+        );
     }
 
     </script>
   </head>
   <body>
-    <h1>Example</h1>
-    <p>getCurrentHeading</p>
+    <p><a href="#" onclick="showAlert(); return false;">Show Alert</a></p>
   </body>
 </html>

@@ -42,3 +42,17 @@
 	position:relative;
 	top:1px;
 }
+
+.app {
+    background: #CCC;
+    position:absolute;             /* position in the center of the screen */
+    left:50%;
+    top:50%;
+    height:250px;                   /* text area height */
+    width:250px;                   /* text area width */
+    text-align:center;
+    padding:250px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
+    margin:-125px 0px 0px -125px;  /* offset vertical: half of image height and text area height */
+                                   /* offset horizontal: half of text area width */
+}
+

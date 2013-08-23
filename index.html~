@@ -1,74 +1,42 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Compass Example</title>
-
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    <script type="text/javascript" charset="utf-8">
-
-    // The watch id references the current `watchHeading`
-    var watchID = null;
-
-    // Wait for device API libraries to load
-    //
-    document.addEventListener("deviceready", onDeviceReady, false);
-
-    // device APIs are available
-    //
-    function onDeviceReady() {
-        startWatch();
-    }
-
-    // Start watching the compass
-    //
-    function startWatch() {
-
-        // Update compass every 3 seconds
-        var options = { frequency: 3000 };
-
-        watchID = navigator.compass.watchHeading(onSuccess, onError, options);
-    }
-
-    // Stop watching the compass
-    //
-    function stopWatch() {
-        if (watchID) {
-            navigator.compass.clearWatch(watchID);
-            watchID = null;
-        }
-    }
-
-    // onSuccess: Get the current heading
-    //
-    function onSuccess(heading) {
-        var element = document.getElementById('heading');
-        element.innerHTML = 'Heading Magnetic: ' + heading.magneticHeading + ' Heading True: ' + heading.trueHeading;
-    }
-
-    // onError: Failed to get the heading
-    //
-    function onError(compassError) {
-        alert('Compass error: ' + compassError.code);
-    }
-
-    </script>
-  </head>
-  <body>
-    <div id="heading">Waiting for heading...</div>
-    <button onclick="startWatch();">Start Watching</button>
-    <button onclick="stopWatch();">Stop Watching</button>
-  </body>
-</html>
-
-<!--
-<!DOCTYPE html>
 <html lang="de">
 	<head>
 		<meta charset="utf-8" />
 		<title>KompassAndroid2</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-		<script type="text/javascript" charset="utf-8" src="lib/js/scripts.js"></script>
+		<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    		<script type="text/javascript" charset="utf-8">
+var zb = null;
+var img = null;
+var winkelalt = 0;
+window.onload = function() {
+	img = new Image();
+	img.src = 'images/kompass.png';
+	zb = document.getElementById("rose").getContext('2d');
+	zb.translate(125, 125);
+	document.addEventListener("deviceready", function() {
+		navigator.compass.watchHeading(success, error, {
+			frequency : 1000
+		});
+	}, false);
+}
+function success(heading) {
+	var winkel = Math.floor(heading.magneticHeading);
+	document.getElementById('kompass').innerHTML = winkel;
+	zb.translate(-125, -125);
+	zb.clearRect(0, 0, 500, 500);
+	zb.translate(125, 125);
+	zb.rotate((winkelalt - winkel) * Math.PI / 180);
+	winkelalt = winkel;
+	zb.drawImage(img, -125, -125);
+}
+
+function error(compassError) {
+	document.getElementById('kompass').innerHTML = ('Fehler: ' + compassError.code);
+
+}		
+		</script>
 	</head>
 	<body>
 		<h1 class="ausrichtung rundeEcken">Himmelsrichtung</h1>
@@ -82,4 +50,3 @@
 	</body>
 </html>
 
--->

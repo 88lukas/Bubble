@@ -35,6 +35,12 @@
 	text-align: center;
 }
 .ausrichtung2 {
+	margin-top: 5px;
+	margin-left: 5px;
+}
+
+#center{
+	background: #CCC;
 	position: absolute;
 	width: 250px;
 	height: 250px;
@@ -42,7 +48,6 @@
 	left: 50%;
 	margin-top: -125px;
 	margin-left: -125px;
-	background-color:#cccccc;
 }
 
 
